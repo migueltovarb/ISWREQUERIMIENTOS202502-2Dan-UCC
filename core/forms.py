@@ -9,7 +9,7 @@ class ReservaForm(forms.ModelForm):
     class Meta:
         model = Reserva
         fields = ['laboratorio', 'equipo', 'fecha_inicio', 'fecha_fin',
-                  'es_grupal', 'cantidad_personas', 'notas']
+                'es_grupal', 'cantidad_personas', 'notas']
         widgets = {
             'fecha_inicio': forms.DateTimeInput(
                 attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'
