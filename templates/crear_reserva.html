@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="text-center mb-5 text-primary fw-bold">Crear Nueva Reserva</h2>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg">
+                <div class="card-body p-5">
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <!-- Laboratorio -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Laboratorio <span class="text-danger">*</span></label>
+                            <select name="laboratorio" class="form-select form-select-lg" required>
+                                <option value="">-- Seleccione un laboratorio --</option>
+                                {% for lab in form.laboratorio.field.queryset %}
+                                    <option value="{{ lab.id }}">{{ lab.nombre }} (Capacidad: {{ lab.capacidad }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!-- Equipo (opcional) -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Equipo (opcional)</label>
+                            <select name="equipo" class="form-select form-select-lg">
+                                <option value="">-- Sin equipo --</option>
+                                {% for eq in form.equipo.field.queryset %}
+                                    <option value="{{ eq.id }}">{{ eq.nombre }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <!-- Fechas -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Fecha y hora inicio <span class="text-danger">*</span></label>
+                                <input type="datetime-local" name="fecha_inicio" class="form-control form-control-lg" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Fecha y hora fin <span class="text-danger">*</span></label>
+                                <input type="datetime-local" name="fecha_fin" class="form-control form-control-lg" required>
+                            </div>
+                        </div>
+
+                        <!-- Reserva grupal -->
+                        <div class="mb-4">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" name="es_grupal" id="es_grupal">
+                                <label class="form-check-label fw-bold" for="es_grupal">Es reserva grupal</label>
+                            </div>
+                        </div>
+
+                        <!-- Cantidad de personas -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Cantidad de personas</label>
+                            <input type="number" name="cantidad_personas" class="form-control form-control-lg" min="1" value="1">
+                        </div>
+
+                        <!-- Notas -->
+                        <div class="mb-5">
+                            <label class="form-label fw-bold">Notas (opcional)</label>
+                            <textarea name="notas" class="form-control form-control-lg" rows="3"></textarea>
+                        </div>
+
+                        <!-- Botones -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success btn-lg px-5 shadow">
+                                Reservar Laboratorio
+                            </button>
+                            <a href="{% url 'home' %}" class="btn btn-secondary btn-lg px-5 shadow">
+                                Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

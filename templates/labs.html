@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Laboratorios Disponibles</h2>
+<div class="row">
+    {% for lab in labs %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">{{ lab.nombre }}</h5>
+                <p class="card-text">
+                    <strong>Capacidad:</strong> {{ lab.capacidad }} personas<br>
+                    <strong>Estado:</strong> 
+                    {% if lab.activo %}
+                        <span class="text-success">Disponible</span>
+                    {% else %}
+                        <span class="text-danger">No disponible</span>
+                    {% endif %}
+                </p>
+                <a href="{% url 'crear_reserva' %}" class="btn btn-primary">Reservar este laboratorio</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-warning">No hay laboratorios registrados aún.</div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
